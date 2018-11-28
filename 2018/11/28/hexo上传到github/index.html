@@ -3,11 +3,14 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>Test | JDemon&#39;s Blog</title>
+  <title>Hexo上传到Github | JDemon&#39;s Blog</title>
   <meta name="author" content="JDemon">
 
   
-  <meta name="description" content="这只是一个测试页面">
+  <meta name="description" content="Githubgithub上创建一个名为’YourName.github.io’的repository
+Hexo回到_config.yml文件下改写参数：
+url: https://YourName.github.io/
+deploy:  type: git  repo: https://github">
   
   
 
@@ -45,16 +48,25 @@
   <header>
     
   
-    <h1 class="title">Test</h1>
+    <h1 class="title">Hexo上传到Github</h1>
   
 
-    <time datetime="2018-11-26T16:00:00.000Z">
-  <span class="day">27</span><span class="month">Nov</span>
+    <time datetime="2018-11-28T01:54:59.000Z">
+  <span class="day">28</span><span class="month">Nov</span>
 </time>
   </header>
   <div class="entry-content">
     
-      <p>这只是一个测试页面</p>
+      <h3 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h3><p>github上创建一个名为’YourName.github.io’的repository</p>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>回到_config.yml文件下改写参数：</p>
+<p>url: <a href="https://YourName.github.io/" target="_blank" rel="noopener">https://YourName.github.io/</a></p>
+<p>deploy:<br>  type: git<br>  repo: <a href="https://github.com/YourName/YourName.github.io.git" target="_blank" rel="noopener">https://github.com/YourName/YourName.github.io.git</a><br>  branch: master</p>
+<hr>
+<p>当前文件目录下：</p>
+<p>安装hexo-deployer-git工具: npm install hexo-deployer-git -save </p>
+<p>上传文件: hexo d</p>
+<p>上传完毕后，可以看到：INFO Deploy done: git</p>
+<p>最后访问自己的主页<a href="https://YourName.github.io/" target="_blank" rel="noopener">https://YourName.github.io/</a> 部署完成</p>
 
     
     
