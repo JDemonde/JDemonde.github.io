@@ -44,6 +44,47 @@
   <header>
     
   
+    <h1 class="title"><a href="/2019/09/29/Axios常见封装/">Axios常见封装</a></h1>
+  
+
+    <time datetime="2019-09-29T09:53:07.000Z">
+  <span class="day">29</span><span class="month">Sep</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h3 id="一、登录例子"><a href="#一、登录例子" class="headerlink" title="一、登录例子"></a>一、登录例子</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//1. 登录状态 (token)</span><br><span class="line">    let instance = axios.create(&#123;&#125;)</span><br><span class="line">    instance.interceptors.request.use(config=&gt;&#123;</span><br><span class="line">        config.headers.token = &apos;&apos;</span><br><span class="line">        return config</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">//2. 不需登录</span><br><span class="line">    let newInstance = axios.create(&#123;&#125;)</span><br><span class="line"></span><br><span class="line">//3. 移动端请求,请求前添加等待页面</span><br><span class="line">    let instancePhone = axios.create(&#123;&#125;);</span><br><span class="line">    instancePhone.interceptors.request.use(config=&gt;&#123;</span><br><span class="line">        $(&apos;#modal&apos;).show();</span><br><span class="line">        return config;</span><br><span class="line">    &#125;)</span><br><span class="line">    instancePhone.interceptors.response.use(res=&gt;&#123;</span><br><span class="line">        $(&apos;#modal&apos;).hide();</span><br><span class="line">        return res;</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="二、axios封装"><a href="#二、axios封装" class="headerlink" title="二、axios封装"></a>二、axios封装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// async作用 避免进入回调地域</span><br><span class="line">async function()&#123;</span><br><span class="line">    let res = null</span><br><span class="line">    try&#123;</span><br><span class="line">        res = await axios.get();</span><br><span class="line">    &#125;catch(err)&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    
+    
+    <footer class="meta">
+      
+      
+      
+    </footer>
+    
+  </div>
+  
+</article>
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
     <h1 class="title"><a href="/2019/09/29/Axios概述/">Axios概述</a></h1>
   
 
@@ -53,18 +94,59 @@
   </header>
   <div class="entry-content">
     
-      <h3 id="请求方法类型"><a href="#请求方法类型" class="headerlink" title="请求方法类型"></a>请求方法类型</h3><ol>
+      <h3 id="一、请求方法类型"><a href="#一、请求方法类型" class="headerlink" title="一、请求方法类型"></a>一、请求方法类型</h3><ol>
 <li><p>get</p>
 </li>
 <li><p>post</p>
-<p> 表单提交,文件上传</p>
 </li>
+</ol>
+<p>表单提交,文件上传</p>
+<!-- data: form-data, 表单提交(图片上传文件上传) -->
+<!-- data: application/json json格式 -->
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">axios.post(url,data,config)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- json --&gt;</span><br><span class="line">let data = &#123;</span><br><span class="line">    id: 1</span><br><span class="line">&#125;</span><br><span class="line">axios.post(url,data).then(res=&gt;&#123;&#125;)</span><br><span class="line">axios(&#123;</span><br><span class="line">    method: &apos;post&apos;,</span><br><span class="line">    url: url,</span><br><span class="line">    data: data</span><br><span class="line">&#125;).then(res =&gt;&#123;&#125;)</span><br><span class="line"></span><br><span class="line">&lt;!-- form-data --&gt;</span><br><span class="line">let formData = new FormData();</span><br><span class="line">for(let key in data)&#123;</span><br><span class="line">    formData.append(key,data[key]);</span><br><span class="line">&#125;</span><br><span class="line">axios.post(url,formData).then(res=&gt;&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<ol start="3">
 <li><p>put patch</p>
 <p> 更新数据</p>
 <p> put: 所有数据推送到后端</p>
 <p> patch:只将修改的数据推送到后端</p>
 </li>
-<li><p>delete</p>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">axios.put(url,data).then(res=&gt;&#123;&#125;)</span><br><span class="line">axios.patch(url,data).then(res=&gt;&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>delete</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 参数名为data,参数不接在url后面 --&gt;</span><br><span class="line">&lt;!-- 参数名为params,参数接在url后面 --&gt;</span><br><span class="line">axios.delete(url,&#123;</span><br><span class="line">    data:&#123;</span><br><span class="line">        id:1</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).then(res=&gt;&#123;&#125;)</span><br><span class="line"></span><br><span class="line">axios.delete(url,&#123;</span><br><span class="line">    params:&#123;</span><br><span class="line">        id:1</span><br><span class="line">    &#125;</span><br><span class="line">&#125;).then(res=&gt;&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="二、并发请求"><a href="#二、并发请求" class="headerlink" title="二、并发请求"></a>二、并发请求</h3><p>同时进行多个请求并统一处理 axios.all() axios.spread()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">axios.all([</span><br><span class="line">    axios.get(url1),</span><br><span class="line">    axios.get(url2)</span><br><span class="line">]).then(</span><br><span class="line">    axios.spread((url1Res,url2Res)=&gt;&#123;</span><br><span class="line">        //url1Res表示url1的返回, url2Res表示url2的返回</span><br><span class="line">    &#125;)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h3 id="三、Axios实例"><a href="#三、Axios实例" class="headerlink" title="三、Axios实例"></a>三、Axios实例</h3><ol>
+<li>后端进口地址域名有多个,或者超时时长不一样,需进行穿件axios实例</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">例:</span><br><span class="line">let instance = axios.create(&#123;</span><br><span class="line">    baseURL: &apos;http://localhost:8080&apos;, //baseURL表示请求的前缀路径</span><br><span class="line">    timeout: 1000   //超时时长设置</span><br><span class="line">&#125;)</span><br><span class="line">使用:</span><br><span class="line">instance.get(url).then(res=&gt;&#123;&#125;)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>相关配置</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">axios.create(&#123;</span><br><span class="line">    baseURL:&apos;&apos;, //请求的域名, 基本地址</span><br><span class="line">    timeout: 1000, //请求超时时长(ms)</span><br><span class="line">    url:&apos;&apos;, //请求路径</span><br><span class="line">    method: &apos;get,post,put,patch,delete&apos;,</span><br><span class="line">    headers:&#123;</span><br><span class="line">        token: &apos;&apos;</span><br><span class="line">    &#125;, //请求头</span><br><span class="line">    params:&#123;&#125;, //将请求参数拼接在url上</span><br><span class="line">    data: &#123;&#125;, //将请求参数放在请求体</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>(1). axios全局配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">axios.defaults.timeout = 1000</span><br><span class="line">axios.defaults.baseURL = &apos;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>(2). axios实例配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let instance = axios.create(&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line">instance.defaults.timeout = 1000</span><br><span class="line">instance.defaults.baseURL = &apos;&apos;</span><br></pre></td></tr></table></figure></p>
+<p>(3). axios请求配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">instance.get(url,&#123;</span><br><span class="line">    timeout: 5000</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<h3 id="四、-拦截器"><a href="#四、-拦截器" class="headerlink" title="四、 拦截器"></a>四、 拦截器</h3><p>在请求或响应被处理前拦截它们</p>
+<ol>
+<li>请求拦截器</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">axios.interceptors.request.use(</span><br><span class="line">    config=&gt;&#123;</span><br><span class="line">        //发送请求前做些什么</span><br><span class="line">        return config</span><br><span class="line">    &#125;,err=&gt;&#123;</span><br><span class="line">        //在请求错误的时候做些什么</span><br><span class="line">        return Promise.reject(err)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li><p>响应拦截器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">axios.interceptors.response.use(</span><br><span class="line">    res=&gt;&#123;</span><br><span class="line">        //请求成功对响应数据做处理</span><br><span class="line">        return res</span><br><span class="line">    &#125;,err=&gt;&#123;</span><br><span class="line">        //在响应错误做些什么</span><br><span class="line">        return Promise.reject(err)</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取消拦截器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">let interceptors = axios.interceptors.request.use(</span><br><span class="line">    config=&gt;&#123;</span><br><span class="line">        config.headers = &#123;</span><br><span class="line">            auth: true</span><br><span class="line">        &#125;</span><br><span class="line">        return config</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br><span class="line">axios.interceptors.request.eject(interceptors)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>错误处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">axios.get().then(res=&gt;&#123;</span><br><span class="line"></span><br><span class="line">&#125;).catch(err=&gt;&#123;</span><br><span class="line">    //请求或响应错误都会进入catch中</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">//统一封装错误处理</span><br><span class="line">let instance = axios.create(&#123;&#125;);</span><br><span class="line">instance.interceptors.request.use(config=&gt;&#123;</span><br><span class="line">    return config</span><br><span class="line">&#125;,err=&gt;&#123;</span><br><span class="line">    //请求错误 一般http状态码以4开头，常见: 401超时, 404未找到</span><br><span class="line">&#125;)</span><br><span class="line">instance.interceptors.resopnse.use(res=&gt;&#123;</span><br><span class="line">    return res</span><br><span class="line">&#125;,err=&gt;&#123;</span><br><span class="line">    //响应错误处理, http状态码一般以5开头 500系统错误 502系统重启</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>取消请求</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">let source = axios.CancelToken.source();</span><br><span class="line">axios.get(url,&#123;</span><br><span class="line">    cancelToken: source.token</span><br><span class="line">&#125;).then(res=&gt;&#123;</span><br><span class="line"></span><br><span class="line">&#125;).catch(err=&gt;&#123;</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line">//取消请求(message可选) message会传入请求的catch中</span><br><span class="line">source.cancel(&apos;cancel http&apos;)</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 
@@ -418,8 +500,10 @@ dh:应用于canvas的高度
 <hr>
 <p>有文件更新是执行:</p>
 <p>hexo clean</p>
-<p>hexo generate</p>
+<p>hexo generate  </p>
 <p>hexo d</p>
+<p>本地运行</p>
+<p>hexo server  //本地地址<a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a></p>
 
     
     
