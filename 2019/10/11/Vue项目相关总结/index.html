@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Vue项目相关总结 | JDemon&#39;s Blog</title>
+  <meta name="author" content="JDemon">
+
+  
+  <meta name="description" content="1. 键盘事件监听页面全局监听键盘事件, 键盘事件绑定在div上无效
+解决方法(取消window自带的快捷键事件): 
+1234567891011created() &amp;#123;    let self = this;    document.onkeydown = function(e)&amp;#123">
+  
+  
+
+  <link rel="alternate" href="/atom.xml" title="JDemon&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head></html>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">Vue项目相关总结</h1>
+  
+
+    <time datetime="2019-10-11T09:40:47.000Z">
+  <span class="day">11</span><span class="month">Oct</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h3 id="1-键盘事件监听"><a href="#1-键盘事件监听" class="headerlink" title="1. 键盘事件监听"></a>1. 键盘事件监听</h3><p>页面全局监听键盘事件, 键盘事件绑定在div上无效</p>
+<p>解决方法(取消window自带的快捷键事件): </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">created() &#123;</span><br><span class="line">    let self = this;</span><br><span class="line">    document.onkeydown = function(e)&#123;</span><br><span class="line">        &lt;!-- Ctrl+C --&gt;</span><br><span class="line">        if(e.keyCode == 83 &amp;&amp; e.ctrlKey)&#123;</span><br><span class="line">            //需要实现的事情</span><br><span class="line">            e.preventDefault();</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>这样写后出现的问题:</p>
+<p>在其他页面该键盘事件无效，首次进入该页面后，键盘事件有效，再进入其他页面，键盘事件还存在。</p>
+<p>解决方法(在需要键盘事件页面销毁方法取消键盘监听):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">destroyed()&#123;</span><br><span class="line">    document.onkeydown = undefined;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>或者写成addEventListener, removeEventListener形式</p>
+
+    
+    
+    <footer class="meta">
+      
+      
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+  
+  
+  
+  <a class="rss" href="/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2019 JDemon
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/js/phasebeam.js"></script>
+</body>
+</html>
